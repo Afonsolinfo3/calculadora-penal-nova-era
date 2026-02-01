@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Penal - Nova Era</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
+color:#fff;
+padding:20px
+}
+h1{text-align:center;color:#ff8c00;margin-bottom:20px}
+
+.top-fields{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+background:rgba(255,255,255,.05);
+padding:15px;
+border-radius:15px;
+margin-bottom:20px
+}
+
+input,button{
+padding:10px;
+border-radius:10px;
+border:none;
+font-family:inherit
+}
+input{
+background:#222;
+color:#fff;
+border:2px solid #ff8c00
+}
+button{
+background:linear-gradient(45deg,#ff8c00,#6a0dad);
+color:#fff;
+cursor:pointer;
+font-weight:600
+}
+
+.container{display:flex;gap:20px;flex-wrap:wrap}
+
+.panel{
+flex:1;
+min-width:300px;
+background:rgba(255,255,255,.05);
+padding:20px;
+border-radius:15px;
+border:1px solid rgba(255,140,0,.3)
+}
+.panel h2{color:#ff8c00;margin-bottom:10px}
+
+.articles,.atenuantes{max-height:350px;overflow-y:auto}
+
+.article-item,.atenuante-item{
+background:rgba(255,255,255,.08);
+padding:10px;
+border-radius:10px;
+margin-bottom:8px;
+display:flex;
+gap:8px;
+align-items:center
+}
+
+.ficha div{
+display:flex;
+justify-content:space-between;
+border-bottom:1px solid rgba(255,255,255,.1);
+padding:6px 0
+}
+
+/* 🔽 BOTÕES MAIS PARA BAIXO */
+.buttons{
+position:fixed;
+right:20px;
+bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px
+}
+
+.feedback{
+position:fixed;
+top:20px;
+right:20px;
+background:#4CAF50;
+padding:10px 20px;
+border-radius:10px;
+display:none
+}
+</style>
+</head>
+
+<body>
+
+<h1>⚖️ Calculadora Penal — Cidade Nova Era</h1>
+
+<div class="top-fields">
+<input id="nome" placeholder="👤 Nome do Acusado">
+<input id="id" placeholder="🪪 ID / Passaporte">
+</div>
+
+<div class="container">
+
+<div class="panel">
+<h2>📜 ARTIGOS PENAIS</h2>
+<input id="search" placeholder="🔍 Buscar artigo">
+<div class="articles" id="listaArtigos"></div>
+</div>
+
+<div class="panel">
+<h2>🛡️ ATENUANTES</h2>
+<div class="atenuantes">
+<label class="atenuante-item"><input type="checkbox" data-red="10"> ⚖️ Jurídico (10%)</label>
+<label class="atenuante-item"><input type="checkbox" data-red="15"> 🧾 Réu Primário (15%)</label>
+<label class="atenuante-item"><input type="checkbox" data-red="20"> 🗣️ Confissão (20%)</label>
+<label class="atenuante-item"><input type="checkbox" data-red="25"> 🤝 Colaboração (25%)</label>
+</div>
+</div>
+
+<div class="panel">
+<h2>📂 FICHA CRIMINAL</h2>
+<div class="ficha">
+<div><strong>👤 Nome:</strong><span id="fNome">-</span></div>
+<div><strong>🪪 ID:</strong><span id="fId">-</span></div>
+<div><strong>⛓️ Crimes:</strong><span id="fCrimes">-</span></div>
+<div><strong>⌛ Pena Total:</strong><span id="fPena">-</span></div>
+<div><strong>📉 Redução:</strong><span id="fRed">-</span></div>
+<div><strong>⚖️ Pena Final:</strong><span id="fFinal">-</span></div>
+<div><strong>💰 Multa:</strong><span id="fMulta">-</span></div>
+</div>
+</div>
+
+</div>
+
+<div class="buttons">
+<button onclick="calcular()">⚖️ CALCULAR</button>
+<button onclick="copiar()">📋 COPIAR</button>
+<button onclick="limpar()">🧹 LIMPAR</button>
+</div>
+
+<div class="feedback" id="ok">✅ Copiado com sucesso!</div>
+
+<script>
+const crimes=[
+{c:"Art.01",n:"Abuso de Autoridade",p:10,m:2000,fianca:5000},
+{c:"Art.02",n:"Corrupção",p:15,m:3000,fianca:0},        // inafiançável
+{c:"Art.03",n:"Desacato",p:5,m:1000,fianca:3000},
+{c:"Art.04",n:"Impedir Ação Policial",p:8,m:1500,fianca:4000},
+{c:"Art.05",n:"Tráfico de Drogas",p:20,m:5000,fianca:0}, // inafiançável
+{c:"Art.06",n:"Roubo",p:12,m:2500,fianca:0},            // inafiançável
+{c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+];
+
+
+const lista=document.getElementById("listaArtigos");
+
+function render(arr){
+lista.innerHTML="";
+arr.forEach((x,i)=>{
+lista.innerHTML+=`
+<label class="article-item">
+<input type="checkbox" data-i="${i}">
+📌 ${x.c} — ${x.n} (${x.p} meses)
+</label>`;
+});
+}
+render(crimes);
+
+let fichaTexto="";
+
+function calcular(){
+let pena=0,multa=0,nomes=[];
+let totalFianca=0;
+let crimeInafiancavel=false;
+
+document.querySelectorAll(".article-item input:checked").forEach(e=>{
+const c=crimes[e.dataset.i];
+pena+=c.p;
+multa+=c.m;
+nomes.push(`${c.c}: ${c.n}`);
+
+if(c.fianca===0){
+crimeInafiancavel=true;
+}else{
+totalFianca+=c.fianca;
+}
+});
+
+let red=0;
+document.querySelectorAll(".atenuantes input:checked").forEach(a=>red+=+a.dataset.red);
+if(red>80)red=80;
+
+const penaFinal=(pena-(pena*red/100)).toFixed(1);
+
+/* painel */
+fNome.textContent=nome.value||"-";
+fId.textContent=id.value||"-";
+fCrimes.textContent=nomes.join(", ")||"-";
+fPena.textContent=pena+" meses";
+fRed.textContent=red+"%";
+fFinal.textContent=penaFinal+" meses";
+fMulta.textContent="R$ "+multa.toLocaleString("pt-BR");
+
+/* fiança */
+const fiancaPaga = crimeInafiancavel ? "Não" : "Sim";
+const valorFianca = crimeInafiancavel ? 0 : totalFianca;
+const textoRestricao = crimeInafiancavel
+? "🚫 Devido a crime(s) inafiançável(is), o réu perde o direito à fiança."
+: "✅ Réu apto a responder em liberdade mediante pagamento de fiança.";
+
+/* modelo */
+fichaTexto=
+`🚨 𝗙𝗜𝗖𝗛𝗔 𝗖𝗥𝗜𝗠𝗜𝗡𝗔𝗟 🚨
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+𝗡𝗢𝗠𝗘 𝗗𝗢 𝗔𝗖𝗨𝗦𝗔𝗗𝗢: ${nome.value||"-"}
+𝗣𝗔𝗦𝗦𝗔𝗣𝗢𝗥𝗧𝗘 𝗗𝗢 𝗔𝗖𝗨𝗦𝗔𝗗𝗢: ${id.value||"-"}
+
+𝗖𝗥𝗜𝗠𝗘𝗦 𝗖𝗢𝗠𝗘𝗧𝗜𝗗𝗢𝗦:
+${nomes.length?nomes.join(", "):"-"}
+
+𝗥𝗘𝗗𝗨𝗖̧𝗔̃𝗢 𝗔𝗣𝗟𝗜𝗖𝗔𝗗𝗔: ${red}%
+𝗔𝗧𝗘𝗡𝗨𝗔𝗡𝗧𝗘𝗦: -
+
+𝗧𝗢𝗧𝗔𝗟 𝗗𝗔 𝗣𝗘𝗡𝗔: ${pena} meses
+𝗧𝗢𝗧𝗔𝗟 𝗗𝗘 𝗠𝗨𝗟𝗧𝗔: R$ ${multa.toLocaleString("pt-BR")}
+
+𝗙𝗜𝗔𝗡𝗖̧𝗔 𝗣𝗔𝗚𝗔: ${fiancaPaga}
+𝗧𝗢𝗧𝗔𝗟 𝗗𝗘 𝗙𝗜𝗔𝗡𝗖̧𝗔: R$ ${valorFianca.toLocaleString("pt-BR")}
+${textoRestricao}
+
+𝗣𝗥𝗜𝗦𝗔̃𝗢 𝗙𝗘𝗜𝗧𝗔 𝗣𝗢𝗥:
+𝗣𝗢𝗟𝗜𝗖𝗜𝗔𝗜𝗦 𝗘𝗡𝗩𝗢𝗟𝗩𝗜𝗗𝗢𝗦:
+𝗝𝗨𝗥𝗜́𝗗𝗜𝗖𝗢 𝗘𝗡𝗩𝗢𝗟𝗩𝗜𝗗𝗢: N/A
+
+𝗥𝗘𝗟𝗔𝗧𝗢́𝗥𝗜𝗢 𝗗𝗔 𝗔𝗖̧𝗔̃𝗢:
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬`;
+}
+
+function copiar(){
+navigator.clipboard.writeText(fichaTexto);
+ok.style.display="block";
+setTimeout(()=>ok.style.display="none",2000);
+}
+
+function limpar(){
+document.querySelectorAll("input").forEach(i=>i.type==="checkbox"?i.checked=false:i.value="");
+calcular();
+}
+
+search.oninput=()=>render(
+crimes.filter(c=>c.n.toLowerCase().includes(search.value.toLowerCase()))
+);
+</script>
+
+
+</body>
+</html>
