@@ -149,82 +149,50 @@ display:none
 
 <script>
 const crimes=[
-{c:"Art.01",n:"Abuso de Autoridade",p:10,m:2000,fianca:5000},
-{c:"Art.02",n:"Corrupção",p:15,m:3000,fianca:0},        // inafiançável
-{c:"Art.03",n:"Desacato",p:5,m:1000,fianca:3000},
-{c:"Art.04",n:"Impedir Ação Policial",p:8,m:1500,fianca:4000},
-{c:"Art.05",n:"Tráfico de Drogas",p:20,m:5000,fianca:0}, // inafiançável
-{c:"Art.06",n:"Roubo",p:12,m:2500,fianca:0},            // inafiançável
-{c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
-// {c:"Art.07",n:"Homicídio",p:30,m:8000,fianca:0}         // inafiançável
+{c:"Art.65",n:"Alta Velocidade",p:4,m:30000,fianca:5000},
+{c:"Art.66",n:"Condução Imprudente",p:4,m:30000,fianca:5000},
+{c:"Art.69",n:"Poluição Sonora",p:3,m:20000,fianca:5000},
+{c:"Art.71",n:"Veículo Ilegalmente Estacionado",p:3,m:20000,fianca:5000},
+{c:"Art.72",n:"Uso Excessivo de Insulfilm",p:3,m:20000,fianca:5000},
+{c:"Art.55",n:"Desobediência",p:5,m:30000,fianca:5000},
+{c:"Art.61",n:"Perturbação da Ordem",p:5,m:30000,fianca:5000},
+{c:"Art.03",n:"Desacato",p:20,m:120000,fianca:8000},
+{c:"Art.04",n:"Impedir Exercício Profissional",p:20,m:120000,fianca:8000},
+{c:"Art.14",n:"Assédio Moral",p:15,m:100000,fianca:8000},
+{c:"Art.15",n:"Calúnia",p:15,m:100000,fianca:8000},
+{c:"Art.16",n:"Difamação",p:15,m:100000,fianca:8000},
+{c:"Art.17",n:"Injúria",p:15,m:100000,fianca:8000},
+{c:"Art.24",n:"Ameaça",p:20,m:120000,fianca:8000},
+{c:"Art.29",n:"Vandalismo",p:20,m:120000,fianca:8000},
+{c:"Art.32",n:"Invasão de Propriedade",p:30,m:150000,fianca:10000},
+{c:"Art.33",n:"Furto",p:35,m:180000,fianca:12000},
+{c:"Art.38",n:"Posse de Cápsula",p:10,m:90000,fianca:5000},
+{c:"Art.44",n:"Porte de Munição",p:10,m:90000,fianca:5000},
+{c:"Art.47",n:"Posse de Drogas",p:15,m:120000,fianca:5000},
+{c:"Art.01",n:"Abuso de Autoridade",p:80,m:350000,fianca:15000},
+{c:"Art.05",n:"Prevaricação",p:80,m:350000,fianca:15000},
+{c:"Art.07",n:"Tráfico de Influência",p:120,m:450000,fianca:20000},
+{c:"Art.08",n:"Uso Irregular de Função Pública",p:80,m:350000,fianca:15000},
+{c:"Art.18",n:"Importunação Sexual",p:140,m:500000,fianca:20000},
+{c:"Art.19",n:"Perjúrio",p:100,m:400000,fianca:15000},
+{c:"Art.20",n:"Abandono de Incapaz",p:140,m:500000,fianca:20000},
+{c:"Art.25",n:"Extorsão",p:160,m:600000,fianca:25000},
+{c:"Art.26",n:"Lesão Corporal",p:100,m:400000,fianca:15000},
+{c:"Art.30",n:"Dano ao Patrimônio Público",p:120,m:450000,fianca:15000},
+{c:"Art.31",n:"Estelionato",p:140,m:500000,fianca:20000},
+{c:"Art.27",n:"Sequestro",p:220,m:800000,fianca:0},
+{c:"Art.28",n:"Tortura",p:260,m:900000,fianca:0},
+{c:"Art.34",n:"Roubo",p:200,m:700000,fianca:0},
+{c:"Art.36",n:"Tráfico de Produtos Ilegais",p:220,m:700000,fianca:0},
+{c:"Art.40",n:"Tráfico de Armas Leve",p:240,m:800000,fianca:0},
+{c:"Art.41",n:"Porte de Arma Pesada",p:180,m:600000,fianca:0},
+{c:"Art.42",n:"Tráfico de Armas Pesada",p:300,m:1000000,fianca:0},
+{c:"Art.09",n:"Tentativa de Homicídio",p:260,m:1000000,fianca:0},
+{c:"Art.10",n:"Homicídio Culposo",p:220,m:900000,fianca:0},
+{c:"Art.11",n:"Homicídio Doloso",p:350,m:1500000,fianca:0},
+{c:"Art.12",n:"Homicídio Qualificado",p:380,m:1800000,fianca:0},
+{c:"Art.13",n:"Latrocínio",p:400,m:2000000,fianca:0},
+{c:"Art.46",n:"Traição à Pátria",p:380,m:1800000,fianca:0},
 ];
 
 
